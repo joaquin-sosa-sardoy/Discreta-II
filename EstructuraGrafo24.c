@@ -4,7 +4,6 @@
 #include <assert.h>
 #include"EstructuraGrafo24.h"
 
-//prueba
 //initializes an empty list, returns pointer to struct s_list
 //list elements are of u32 type, meant to be neighbouring vertex IDs
 list list_init(){
