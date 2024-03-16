@@ -1,7 +1,14 @@
 #include "APIG24.h"
 static u32 get_delta(Grafo g){
-    //TO DO
-    return 0;
+    u32 delta = 0 ;
+    if( g != NULL){
+        for (unsigned int i = 0 ; i < g->vertex_num; i +=1 ){
+            if(g->vertexes[i]->grado > g->vertexes[i+1]->grado){
+                delta = g->vertexes[i]->grado;
+            }
+        }
+    }
+    return delta ;
 }
 /* lee un grafo desde
 standard input en el formato indicado en la última sección, lo carga en la estructura, colorea todos los vertices
@@ -42,7 +49,8 @@ Grafo ConstruirGrafo(){
             if(aux != 2){
                 return -1 ;
             }
-            list_append( g->vertexes[l]->vecinos, r) ; 
+            list_append( g->vertexes[l]->vecinos, r) ;
+            g->vertexes[l]->grado = g->vertexes[l]->vecinos->length ; 
         }
     }
     g->delta = get_delta(g); // calcula delta de g
@@ -106,5 +114,5 @@ void ImportarColores(color* Color,Grafo  G){
     for(unsigned int i = 0; i < n ; i++){
         G->vertexes[i]->color = Color[i];
     }
-    
+
 }
