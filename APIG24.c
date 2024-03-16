@@ -23,8 +23,30 @@ En caso de error, la función devolverá un puntero a NULL */
 
 Grafo ConstruirGrafo(){
     Grafo g = malloc(sizeof(GrafoSt));
-    g->vertexes= list_init() ;
+    char line;
+    u32 aristas = 0u;
+    u32 grado = 0u;
+    u32 vertexs = 0u;
+    u32 scan_result;
 
+    if(g==NULL){
+        return NULL;
+    }
+
+    while (fscanf(stdin, "%c", &line) != EOF && line != 'p') {
+        while (fscanf(stdin, "%c", &line) != EOF && line != '\n');
+    }
+
+    scan_result = fscanf(stdin, "%*s %u %u\n", &vertexs, &aristas);
+
+    if (scan_result != 2) {
+        return -1;
+    }
+
+    for(unsigned int i=0u; i<vertexs; i++){
+        g->vertexes[i]->color = 0;
+
+    }
 }
 
 void DestruirGrafo(Grafo G){
