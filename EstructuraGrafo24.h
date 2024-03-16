@@ -18,15 +18,15 @@ struct s_list {
 }; 
 
 struct s_vertex{
-    u32 grado ;
-    color color ;
-    list vecinos;
+    u32 grado ; //d(v)
+    color color ; //c(v)
+    list vecinos ; //list with the number of neigbouring vertexes
 };
 
 struct GrafoSt {
     vertex *vertexes; //array of all the vertexes
-    u32 vertex_num ;
-    u32 edges_num ;
+    u32 vertex_num ; //total number of vertexes
+    u32 edges_num ; //total number of edges
 };
 
 /* TO DO:  agregar funciones para manipular lista con arreglos dinamicos*/
