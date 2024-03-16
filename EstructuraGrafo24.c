@@ -36,9 +36,9 @@ u32 list_index(list l, u32 i){
 
 //frees all memory used by list <l>
 list list_destroy(list l){
-    free(l->chunk);
-    free(l);
+    if(l != NULL){
+        free(l->chunk);
+        free(l);
+    }
     return NULL;
 }
-
-/* To do: implementar funciones de EstructuraGrafo24.h"*/

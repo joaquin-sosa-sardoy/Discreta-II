@@ -1,26 +1,53 @@
-#include"EstructuraGrafo24.h"
+#ifndef APIG24_H
+#define APIG24_H
 
-// este .h es preliminar, supuestamente se va a subir una copia en el aula virtual
+
+#include <stdio.h>
+#include <stdlib.h>
 
 
-typedef struct Grafo *GrafoSt ;
-//Funciones De Construcción/Destrucción del grafo
+//el .h de abajo debe tener definida GrafoSt, u32 y color.
+#include "EstructuraGrafo24.h"
+
+
+
+//Grafo es un puntero a una estructura GrafoSt, la cual debe estar definida en el .h de arriba
+
+typedef GrafoSt *Grafo;
+
+
+//construccion/destrucción
+
+//debe leer desde stdin
 Grafo ConstruirGrafo();
+
 void DestruirGrafo(Grafo G);
 
-// Funciones para extraer informaci ́on de datos del grafo O(1)
+
+
+//funciones para extraer datos del grafo. u32 debe estar definida en el .h de arriba
+
 u32 NumeroDeVertices(Grafo G);
 u32 NumeroDeLados(Grafo G);
 u32 Delta(Grafo G);
 
-//Funciones para extraer información de los vertices O(1)
+
+//funciones de extraccion de informacion de vertices 
+
+
 u32 Grado(u32 i,Grafo G);
 color Color(u32 i,Grafo G);
 u32 Vecino(u32 j,u32 i,Grafo G);
 
-// Funciones para asignar colores
-void AsignarColor(color x,u32 i,Grafo G);
 
+
+//funciones con colores
+
+
+void AsignarColor(color x,u32 i,Grafo  G);
 void ExtraerColores(Grafo G,color* Color);
+void ImportarColores(color* Color,Grafo  G);
 
-void ImportarColores(color* Color,Grafo G);
+
+
+#endif
