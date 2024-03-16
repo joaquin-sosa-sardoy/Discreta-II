@@ -106,5 +106,5 @@ void ImportarColores(color* Color,Grafo  G){
     for(unsigned int i = 0; i < n ; i++){
         G->vertexes[i]->color = Color[i];
     }
-
+    
 }
