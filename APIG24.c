@@ -75,7 +75,11 @@ u32 Grado(u32 i,Grafo G){
     return G->vertexes[i]->grado ;
 }
 color Color(u32 i,Grafo G){
-    return G->vertexes[i]->color ;
+    if(i < G->vertex_num){
+        return G->vertexes[i]->color ;
+    } else {
+        return 4294967295;
+    }
 }
 u32 Vecino(u32 j,u32 i,Grafo G){
     if( i >= G->vertex_num || (i < G->vertex_num && j >= Grado(i,G))){
@@ -97,5 +101,10 @@ void ExtraerColores(Grafo G,color* Color){
     }
 }
 void ImportarColores(color* Color,Grafo  G){
+    u32 n = G->vertex_num;
+    
+    for(unsigned int i = 0; i < n ; i++){
+        G->vertexes[i]->color = Color[i];
+    }
 
 }
