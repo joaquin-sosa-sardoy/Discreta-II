@@ -10,10 +10,8 @@
 
 //programa para testear
 
-int main(int argc, char **argv){
-    printf("HOLA");
-    ++argc;
-    ++argv;
+int main(void){
+    printf("HOLA\n");
     //Esta parte armaria el grafo que este en un archivo test.txt.
     //para cuando quieran testear, creen el archivo y copien el ejemplo del enunciado.
     Grafo g = ConstruirGrafo();

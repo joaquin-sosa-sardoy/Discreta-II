@@ -6,6 +6,7 @@ con el color 0, y devuelve un puntero a la estructura.
 En caso de error, la función devolverá un puntero a NULL */
 
 Grafo ConstruirGrafo(){
+    printf("LINEA 9");
     char Fchar;
     int aux;
     u32 r ;
@@ -14,15 +15,18 @@ Grafo ConstruirGrafo(){
     if(g == NULL){
         return NULL;
     }
+    printf("LINEA 17");
     //lee hasta que la primera letra es p 
     while (fscanf(stdin, "%c", &Fchar) != EOF && Fchar == 'c') {
         while (fscanf(stdin, "%c", &Fchar) != EOF && Fchar != '\n');
     }
+    printf("LINEA 22");
     // lee cantidad de vertices y aristas
     aux = fscanf(stdin, "%*s %u %u", &g->vertex_num, &g->edges_num);
     if(aux<0){
         return NULL;
     }
+    printf("LINEA 28");
     g->delta = 0 ;
     g->vertexes = malloc(sizeof(struct s_vertex)*g->vertex_num);
     for(u32 i = 0; i <g->edges_num; ++i){
@@ -33,6 +37,7 @@ Grafo ConstruirGrafo(){
         list_append( g->vertexes[l]->vecinos, r);
         list_append( g->vertexes[r]->vecinos, l);
     }
+    printf("LINEA 39");
     for(u32 i = 0; i<g->vertex_num; ++i){
         g->delta = max(g->delta, g->vertexes[i]->vecinos->length);
     }
