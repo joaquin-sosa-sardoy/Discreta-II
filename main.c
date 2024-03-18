@@ -11,11 +11,14 @@
 //programa para testear
 
 int main(void){
-    printf("HOLA\n");
+    close(0);
+    u32 fd = open("test.txt", O_RDONLY);
+    if(fd){
+        printf("AIUDA\n");
+    }
     //Esta parte armaria el grafo que este en un archivo test.txt.
     //para cuando quieran testear, creen el archivo y copien el ejemplo del enunciado.
     Grafo g = ConstruirGrafo();
-
     //Esta parte printea por pantalla los resultados de las funciones sobre el grafo.
     //Hay que confirmar que esten bien a mano
 
@@ -50,5 +53,6 @@ int main(void){
             printf("ERROR: NO SE ESTAN IMPORTANDO/EXPORTANDO BIEN LOS COLORES\n");
         }
     }
+    DestruirGrafo(g);
     return 0;
 }

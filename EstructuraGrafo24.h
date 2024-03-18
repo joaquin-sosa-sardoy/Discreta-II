@@ -23,12 +23,12 @@ struct s_vertex{
 };
 
 struct GrafoSt {
-    vertex *vertexes; //array of all the vertexes
+    struct s_vertex *vertexes; //array of all the vertexes
     u32 vertex_num ; //total number of vertexes
     u32 edges_num ; //total number of edges
     u32 delta ; 
 };
-typedef struct GrafoSt GrafoSt ;
+
 
 //initializes an empty list, returns pointer to struct s_list
 //list elements are of u32 type, meant to be neighbouring vertex IDs
