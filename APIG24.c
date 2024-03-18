@@ -1,15 +1,5 @@
 #include "APIG24.h"
-static u32 get_delta(Grafo g){
-    u32 delta = 0 ;
-    if( g != NULL){
-        for (unsigned int i = 0 ; i < g->vertex_num; i +=1 ){
-            if(g->vertexes[i]->grado > g->vertexes[i+1]->grado){
-                delta = g->vertexes[i]->grado;
-            }
-        }
-    }
-    return delta ;
-}
+#define max(x, y) ((x) > (y) ? (x) : (y))
 /* lee un grafo desde
 standard input en el formato indicado en la última sección, lo carga en la estructura, colorea todos los vertices
 con el color 0, y devuelve un puntero a la estructura.
@@ -17,54 +7,47 @@ En caso de error, la función devolverá un puntero a NULL */
 
 Grafo ConstruirGrafo(){
     char Fchar;
-    u32 aristas = 0u;
-    u32 grado = 0u;
-    u32 vertexs = 0u;
-    u32 aux;
+    int aux;
     u32 r ;
     u32 l ; 
-
     Grafo g = malloc(sizeof(GrafoSt));
-    
     if(g == NULL){
         return NULL;
     }
     //lee hasta que la primera letra es p 
-    while (fscanf(stdin, "%c", &Fchar) != EOF && Fchar != 'p') {
+    while (fscanf(stdin, "%c", &Fchar) != EOF && Fchar == 'c') {
         while (fscanf(stdin, "%c", &Fchar) != EOF && Fchar != '\n');
     }
     // lee cantidad de vertices y aristas
-    aux = fscanf(stdin, "%*s %u %u\n", &vertexs, &aristas);
-    if (aux != 2) {
-        return -1;
+    aux = fscanf(stdin, "%*s %u %u", &g->vertex_num, &g->edges_num);
+    if(aux<0){
+        return NULL;
     }
     g->delta = 0 ;
-    g->vertex_num = vertexs ;
-    g->edges_num = aristas ;
-    
-    while (fscanf(stdin, "%c", &Fchar) != EOF && Fchar) {
-        while (fscanf(stdin, "%c", &Fchar) != EOF && Fchar != '\n');
-        if(Fchar == 'c'){
-            aux = fscanf(stdin, "%u %u/n", &l, &r);
-            if(aux != 2){
-                return -1 ;
-            }
-            list_append( g->vertexes[l]->vecinos, r) ;
-            g->vertexes[l]->grado = g->vertexes[l]->vecinos->length ; 
+    g->vertexes = malloc(sizeof(struct s_vertex)*g->vertex_num);
+    for(u32 i = 0; i <g->edges_num; ++i){
+        aux = fscanf(stdin, "e %u %u\n", &l, &r);
+        if(aux<0){
+            return NULL;
         }
+        list_append( g->vertexes[l]->vecinos, r);
+        list_append( g->vertexes[r]->vecinos, l);
     }
-    g->delta = get_delta(g); // calcula delta de g
-    // coloreo
-    for(unsigned int i=0u; i<vertexs; i++){
+    for(u32 i = 0; i<g->vertex_num; ++i){
+        g->delta = max(g->delta, g->vertexes[i]->vecinos->length);
+    }
+    for(u32 i=0u; i<g->vertex_num; i++){
         g->vertexes[i]->color = 0;
     }
+    return g;
 }
-
-
 
 void DestruirGrafo(Grafo G){
     if( G != NULL){
-        G->vertexes = list_destroy(G->vertexes);
+        for(u32 i = 0; i<G->vertex_num; ++i){
+            list_destroy(G->vertexes[i]->vecinos);
+        }
+        free(G->vertexes);
         free(G);
     }
 }
@@ -80,7 +63,7 @@ u32 Delta(Grafo G){
 }
 
 u32 Grado(u32 i,Grafo G){
-    return G->vertexes[i]->grado ;
+    return G->vertexes[i]->vecinos->length;
 }
 color Color(u32 i,Grafo G){
     if(i < G->vertex_num){
@@ -93,9 +76,9 @@ u32 Vecino(u32 j,u32 i,Grafo G){
     if( i >= G->vertex_num || (i < G->vertex_num && j >= Grado(i,G))){
         return 4294967295 ; //2^32 -1 
     } else if (i < G->vertex_num && j < Grado(i, G)){
-        return j ; 
+        return list_index(G->vertexes[i]->vecinos, j); 
     }
-     
+    return 0;
 }
 
 void AsignarColor(color x,u32 i,Grafo  G){
